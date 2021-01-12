@@ -7,7 +7,23 @@ decisions made in the previous version.
 
 
 # Cloning the repo
+There are several third-party libraries that are used in this project. They are stored in the
+ThirdParty repo, which is a submodule of this repository. Simply cloning the 3DEngine-v2 repo isn't
+enough as the ThirdParty submodule is not automatically cloned with it.
 
+To clone the ThirdParty submodule as well, the following set of commands can be run:
+
+```
+git clone https://github.com/PranavBahuguna/3DEngine-v2
+git submodule init
+git submodule update
+```
+
+Or to clone the repo and submodules in one go:
+
+```
+git clone --recurse-submodules https://github.com/PranavBahuguna/3DEngine-v2
+```
 
 # Features
 
