@@ -1,7 +1,10 @@
-#include <cstdio>
+#include "WindowManager.hpp"
 
 int main() {
-  printf("Hello world!");
+  WindowManager::Get()->createWindow("Main", WindowMode::FULLSCREEN);
   
+  while (true) {
+  }
+
   return 0;
 }
