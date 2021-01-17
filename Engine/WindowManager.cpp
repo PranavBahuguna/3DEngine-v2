@@ -2,50 +2,69 @@
 
 #include <stdexcept>
 
-WindowManager::WindowManager() : m_window(nullptr), m_width(0), m_height(0) {}
-
 WindowManager::~WindowManager() {
-  glfwDestroyWindow(m_window);
+  closeAll();
   glfwTerminate();
 }
 
+// Create a new window (using a default window name)
+void WindowManager::create(WindowMode wMode, int width, int height, bool vsync) {
+  static size_t index = 1;
+  const std::string name = DEFAULT_WINDOW_NAME + std::to_string(index++);
+  create(DEFAULT_WINDOW_NAME, wMode, width, height, vsync);
+}
+
 // Creates a new window
-void WindowManager::createWindow(const std::string &name, WindowMode wMode, int width, int height,
-                                 bool vsync) {
+void WindowManager::create(const std::string &name, WindowMode wMode, int width, int height,
+                           bool vsync) {
+  m_windows.emplace_back(
+      std::move(std::unique_ptr<Window>(new Window(name, wMode, width, height, vsync))));
+}
 
-  // Set window dimensions from screen if fullscreen is enabled
-  GLFWmonitor *monitor = nullptr;
-  if (wMode == WindowMode::FULLSCREEN || wMode == WindowMode::FULLSCREEN_WINDOWED) {
-    auto primaryMonitor = glfwGetPrimaryMonitor();
-    const GLFWvidmode *mode = glfwGetVideoMode(primaryMonitor);
-    m_width = mode->width;
-    m_height = mode->height;
+// Close a window at index
+void WindowManager::close(size_t wIndex) {
+  if (isValidWindowIndex(wIndex))
+    m_windows.erase(m_windows.begin() + wIndex);
+}
 
-    // Use the primary monitor if we want non-windowed fullscreen
-    if (wMode == WindowMode::FULLSCREEN)
-      monitor = primaryMonitor;
-  } else {
-    // Set window dimensions from supplied arguments
-    m_width = width;
-    m_height = height;
-  }
+// Destroys all stored windows
+void WindowManager::closeAll() { m_windows.clear(); }
 
-  // Try creating the window
-  m_window = glfwCreateWindow(m_width, m_height, name.c_str(), monitor, NULL);
-  if (m_window == nullptr)
-    throw std::runtime_error("An error occurred while creating window.");
+bool WindowManager::shouldClose(size_t wIndex) {
+  return isValidWindowIndex(wIndex) ? m_windows[wIndex]->shouldClose() : false;
+}
 
-  // Set context for GLEW to use
-  glfwMakeContextCurrent(m_window);
+void WindowManager::setContext(size_t wIndex) {
+  if (isValidWindowIndex(wIndex))
+    m_windows[wIndex]->setContext();
+}
 
-  // Setup viewport size
-  glViewport(0, 0, m_width, m_height);
+void WindowManager::swapBuffers(size_t wIndex) {
+  if (isValidWindowIndex(wIndex))
+    m_windows[wIndex]->swapBuffers();
+}
 
-  // Setup keyboard and mouse handlers
-  // ...
+int WindowManager::getWidth(size_t wIndex) const {
+  return isValidWindowIndex(wIndex) ? m_windows[wIndex]->getWidth() : 0;
+}
 
-  // Remove cursor from screen
-  glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+int WindowManager::getHeight(size_t wIndex) const {
+  return isValidWindowIndex(wIndex) ? m_windows[wIndex]->getHeight() : 0;
+}
+
+float WindowManager::getAspectRatio(size_t wIndex) const {
+  return isValidWindowIndex(wIndex) ? m_windows[wIndex]->getAspectRatio() : 0.0f;
+}
+
+size_t WindowManager::numWindows() const { return m_windows.size(); }
+
+// Check if the window index lies in range
+bool WindowManager::isValidWindowIndex(size_t wIndex) const {
+  bool isValid = wIndex < m_windows.size();
+  if (!isValid)
+    printf("Error, index is out of range");
+
+  return isValid;
 }
 
 // Setup GFLW basic properties
