@@ -1,20 +1,28 @@
 #include "WindowManager.hpp"
+#include "Windows.h"
+
+#ifdef _DEBUG
+#define WINDOW_MODE WindowMode::WINDOWED
+#else
+#define WINDOW_MODE WindowMode::FULLSCREEN
+#endif
 
 int main() {
-  auto windowManager = WindowManager::Get();
-  windowManager->create("Win1", WindowMode::WINDOWED);
-  windowManager->create("Win2", WindowMode::WINDOWED);
+  WindowManager::Get().create(WINDOW_MODE);
+  WindowManager::Get().create(WINDOW_MODE);
+  auto mainWindow = WindowManager::Get()[0].getGLFWWindow();
+  auto mainWindow2 = WindowManager::Get()[1].getGLFWWindow();
 
-  while (!windowManager->shouldClose(0) && !windowManager->shouldClose(1)) {
-    // Draw window 1
-    windowManager->setContext(0);
+  while (!glfwWindowShouldClose(mainWindow) || !glfwWindowShouldClose(mainWindow2)) {
+    // Draw window
+    glfwMakeContextCurrent(mainWindow);
     glClear(GL_COLOR_BUFFER_BIT);
-    windowManager->swapBuffers(0);
+    glfwSwapBuffers(mainWindow);
 
-    // Draw window 2
-    windowManager->setContext(1);
+    // Draw window
+    glfwMakeContextCurrent(mainWindow2);
     glClear(GL_COLOR_BUFFER_BIT);
-    windowManager->swapBuffers(1);
+    glfwSwapBuffers(mainWindow2);
 
     glfwPollEvents();
   }

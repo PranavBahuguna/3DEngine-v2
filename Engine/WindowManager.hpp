@@ -9,33 +9,40 @@
 
 static constexpr const char *DEFAULT_WINDOW_NAME = "Window_";
 
+/**
+ * The WindowManager class is a singleton that provides facilities for creating, storing and
+ * destroying Window instances. Additionally on startup, it will also begin initialization of the
+ * GLFW and GLEW libraries before any window can be created.
+ *
+ * The array subscript operator for this class is overloaded to provide easy access to all stored
+ * window objects. For example, to find the height of the first window stored:
+ *
+ *     int winHeight = WindowManager::Get()[0].getHeight();
+ */
 class WindowManager {
 public:
   ~WindowManager();
 
-  static std::shared_ptr<WindowManager> Get() {
+  static WindowManager &Get() {
     if (INSTANCE == nullptr) {
       // Initialise libraries and construct the window manager if accessing for the first time
       InitGLFW();
       InitGLEW();
       INSTANCE = std::shared_ptr<WindowManager>(new WindowManager());
     }
-    return INSTANCE;
+    return *INSTANCE;
   }
 
-  void create(WindowMode wMode = WindowMode::WINDOWED, int width = 800, int height = 600,
-              bool vsync = false);
-  void create(const std::string &name, WindowMode wMode = WindowMode::WINDOWED, int width = 800,
-              int height = 600, bool vsync = false);
-  void close(size_t wIndex);
-  void closeAll();
-  bool shouldClose(size_t wIndex = 0);
-  void setContext(size_t wIndex = 0);
-  void swapBuffers(size_t wIndex = 0);
+  // Overloaded array subscript operator for access to held window objects
+  Window &operator[](int i);
+  const Window &operator[](int i) const;
 
-  int getWidth(size_t wIndex = 0) const;
-  int getHeight(size_t wIndex = 0) const;
-  float getAspectRatio(size_t wIndex = 0) const;
+  void create(WindowMode wMode = WindowMode::WINDOWED, int width = 2000, int height = 1500,
+              bool vsync = false);
+  void create(const std::string &name, WindowMode wMode = WindowMode::WINDOWED, int width = 2000,
+              int height = 1500, bool vsync = false);
+  void close(size_t wIndex = 0);
+  void closeAll();
 
   size_t numWindows() const;
 
@@ -46,10 +53,8 @@ private:
   WindowManager(const WindowManager &) = delete;
   WindowManager &operator=(const WindowManager &) = delete;
 
-  bool isValidWindowIndex(size_t index) const;
-
   static void InitGLFW();
   static void InitGLEW();
 
-  std::vector<std::unique_ptr<Window>> m_windows;
+  std::vector<std::shared_ptr<Window>> _windows;
 };

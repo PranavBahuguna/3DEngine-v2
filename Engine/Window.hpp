@@ -6,14 +6,17 @@
 
 enum class WindowMode { WINDOWED, FULLSCREEN_WINDOWED, FULLSCREEN };
 
+/**
+ * The Window class stores a pointer to an internal GLFWwindow that can be accessed, as well as
+ * provide a variety of initialization options and helper methods for setup. Window objects are
+ * managed directly by the WindowManager class and thus cannot be created and destroyed
+ * independently of WindowManager.
+ */
 class Window {
 public:
   ~Window();
 
-  void close();
-  bool shouldClose();
-  void setContext();
-  void swapBuffers();
+  GLFWwindow *getGLFWWindow();
 
   int getWidth() const;
   int getHeight() const;
@@ -22,10 +25,9 @@ public:
   friend class WindowManager;
 
 private:
-  // Private constructor - can only be created by WindowManager
   Window(const std::string &name, WindowMode wMode, int width, int height, bool vsync);
 
-  GLFWwindow *m_window;
-  int m_width;
-  int m_height;
+  GLFWwindow *_glfwWindow;
+  int _width;
+  int _height;
 };
