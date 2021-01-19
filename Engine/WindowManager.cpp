@@ -1,6 +1,9 @@
+#include "Error.hpp"
 #include "WindowManager.hpp"
 
 #include <stdexcept>
+
+using namespace Error;
 
 WindowManager::~WindowManager() {
   closeAll();
@@ -38,7 +41,7 @@ size_t WindowManager::numWindows() const { return _windows.size(); }
 // Setup GFLW basic properties
 void WindowManager::InitGLFW() {
   if (!glfwInit())
-    return;
+    raiseError(ERROR_GLFW_INIT_FAILED, ERROR_TYPE::CRITICAL);
 
   // OpenGL version
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -54,7 +57,7 @@ void WindowManager::InitGLFW() {
 // Setup GLEW basic properties
 void WindowManager::InitGLEW() {
   if (!glewInit())
-    return;
+    raiseError(ERROR_GLEW_INIT_FAILED, ERROR_TYPE::CRITICAL);
 
   // Allow modern extension features
   glewExperimental = GL_TRUE;

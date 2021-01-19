@@ -1,6 +1,9 @@
 #include "Window.hpp"
+#include "Error.hpp"
 
 #include <stdexcept>
+
+using namespace Error;
 
 Window::Window(const std::string &name, WindowMode wMode, int width, int height, bool vsync)
     : _width(width), _height(height) {
@@ -21,7 +24,7 @@ Window::Window(const std::string &name, WindowMode wMode, int width, int height,
   // Try creating the window
   _glfwWindow = glfwCreateWindow(_width, _height, name.c_str(), monitor, NULL);
   if (_glfwWindow == nullptr)
-    throw std::runtime_error("An error occurred while creating window.");
+    raiseError(ERROR_GLFW_WINDOW_CREATE_FAILED, ERROR_TYPE::CRITICAL, name.c_str());
 
   // Setup keyboard and mouse handlers
   // ...
