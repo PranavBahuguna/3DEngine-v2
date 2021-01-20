@@ -7,6 +7,8 @@
 #include <memory>
 #include <vector>
 
+namespace Engine::Windows {
+
 static constexpr const char *DEFAULT_WINDOW_NAME = "Window_";
 
 /**
@@ -37,10 +39,9 @@ public:
   Window &operator[](int i);
   const Window &operator[](int i) const;
 
-  void create(WindowMode wMode = WindowMode::WINDOWED, int width = 2000, int height = 1500,
-              bool vsync = false);
+  void create(WindowMode wMode = WindowMode::WINDOWED, int width = 2000, int height = 1500);
   void create(const std::string &name, WindowMode wMode = WindowMode::WINDOWED, int width = 2000,
-              int height = 1500, bool vsync = false);
+              int height = 1500);
   void close(size_t wIndex = 0);
   void closeAll();
 
@@ -58,3 +59,4 @@ private:
 
   std::vector<std::shared_ptr<Window>> _windows;
 };
+} // namespace Engine::Windows

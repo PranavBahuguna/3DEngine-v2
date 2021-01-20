@@ -152,6 +152,7 @@
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Error.hpp" />
     <ClInclude Include="Window.hpp" />
     <ClInclude Include="WindowManager.hpp" />
   </ItemGroup>

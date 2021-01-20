@@ -2,29 +2,35 @@
 #include "Windows.h"
 
 #ifdef _DEBUG
-#define WINDOW_MODE WindowMode::WINDOWED
+static constexpr bool USE_FULLSCREEN = false;
 #else
-#define WINDOW_MODE WindowMode::FULLSCREEN
+static constexpr bool USE_FULLSCREEN = true;
 #endif
 
+using namespace Engine::Windows;
+
 int main() {
-  WindowManager::Get().create(WINDOW_MODE);
-  WindowManager::Get().create(WINDOW_MODE);
-  auto mainWindow = WindowManager::Get()[0].getGLFWWindow();
-  auto mainWindow2 = WindowManager::Get()[1].getGLFWWindow();
+  try {
+    // Create a single window
+    WindowMode wMode = USE_FULLSCREEN ? WindowMode::FULLSCREEN : WindowMode::WINDOWED;
+    WindowManager::Get().create(wMode);
+    auto mainWindow = WindowManager::Get()[0].getGLFWWindow();
 
-  while (!glfwWindowShouldClose(mainWindow) || !glfwWindowShouldClose(mainWindow2)) {
-    // Draw window
-    glfwMakeContextCurrent(mainWindow);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(mainWindow);
+    // Remove cursor from screen
+    glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    // Draw window
-    glfwMakeContextCurrent(mainWindow2);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(mainWindow2);
+    while (!glfwWindowShouldClose(mainWindow)) {
+      // Draw window
+      glfwMakeContextCurrent(mainWindow);
+      glClear(GL_COLOR_BUFFER_BIT);
+      glfwSwapBuffers(mainWindow);
 
-    glfwPollEvents();
+      glfwPollEvents();
+    }
+
+  } catch (std::exception &e) {
+    printf(e.what());
+    return EXIT_FAILURE;
   }
 
   return EXIT_SUCCESS;
