@@ -1,8 +1,9 @@
-#include "Error.hpp"
 #include "WindowManager.hpp"
+#include "Error.hpp"
 
 #include <stdexcept>
 
+using namespace Engine::Windows;
 using namespace Error;
 
 WindowManager::~WindowManager() {
@@ -17,17 +18,15 @@ Window &WindowManager::operator[](int i) { return *_windows[i]; }
 const Window &WindowManager::operator[](int i) const { return *_windows[i]; }
 
 // Create a new window (using a default window name)
-void WindowManager::create(WindowMode wMode, int width, int height, bool vsync) {
+void WindowManager::create(WindowMode wMode, int width, int height) {
   static size_t index = 1;
   const std::string name = DEFAULT_WINDOW_NAME + std::to_string(index++);
-  create(name, wMode, width, height, vsync);
+  create(name, wMode, width, height);
 }
 
 // Creates a new window
-void WindowManager::create(const std::string &name, WindowMode wMode, int width, int height,
-                           bool vsync) {
-  _windows.emplace_back(
-      std::move(std::unique_ptr<Window>(new Window(name, wMode, width, height, vsync))));
+void WindowManager::create(const std::string &name, WindowMode wMode, int width, int height) {
+  _windows.emplace_back(std::move(std::unique_ptr<Window>(new Window(name, wMode, width, height))));
 }
 
 // Close a window at index

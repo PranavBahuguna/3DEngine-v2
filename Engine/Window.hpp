@@ -4,6 +4,8 @@
 
 #include <GLFW/glfw3.h>
 
+namespace Engine::Windows {
+
 enum class WindowMode { WINDOWED, FULLSCREEN_WINDOWED, FULLSCREEN };
 
 /**
@@ -25,9 +27,10 @@ public:
   friend class WindowManager;
 
 private:
-  Window(const std::string &name, WindowMode wMode, int width, int height, bool vsync);
+  Window(const std::string &name, WindowMode wMode, int width, int height);
 
   GLFWwindow *_glfwWindow;
   int _width;
   int _height;
 };
+} // namespace Engine::Windows

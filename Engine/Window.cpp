@@ -3,9 +3,10 @@
 
 #include <stdexcept>
 
+using namespace Engine::Windows;
 using namespace Error;
 
-Window::Window(const std::string &name, WindowMode wMode, int width, int height, bool vsync)
+Window::Window(const std::string &name, WindowMode wMode, int width, int height)
     : _width(width), _height(height) {
 
   // Set window dimensions from screen if fullscreen is enabled
@@ -28,9 +29,6 @@ Window::Window(const std::string &name, WindowMode wMode, int width, int height,
 
   // Setup keyboard and mouse handlers
   // ...
-
-  // Remove cursor from screen
-  glfwSetInputMode(_glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 Window::~Window() { glfwDestroyWindow(_glfwWindow); }

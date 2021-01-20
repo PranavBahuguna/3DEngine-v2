@@ -2,28 +2,28 @@
 #include "Windows.h"
 
 #ifdef _DEBUG
-#define WINDOW_MODE WindowMode::WINDOWED
+static constexpr bool USE_FULLSCREEN = false;
 #else
-#define WINDOW_MODE WindowMode::FULLSCREEN
+static constexpr bool USE_FULLSCREEN = true;
 #endif
+
+using namespace Engine::Windows;
 
 int main() {
   try {
-    WindowManager::Get().create(WINDOW_MODE);
-    WindowManager::Get().create(WINDOW_MODE);
+    // Create a single window
+    WindowMode wMode = USE_FULLSCREEN ? WindowMode::FULLSCREEN : WindowMode::WINDOWED;
+    WindowManager::Get().create(wMode);
     auto mainWindow = WindowManager::Get()[0].getGLFWWindow();
-    auto mainWindow2 = WindowManager::Get()[1].getGLFWWindow();
 
-    while (!glfwWindowShouldClose(mainWindow) || !glfwWindowShouldClose(mainWindow2)) {
+    // Remove cursor from screen
+    glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    while (!glfwWindowShouldClose(mainWindow)) {
       // Draw window
       glfwMakeContextCurrent(mainWindow);
       glClear(GL_COLOR_BUFFER_BIT);
       glfwSwapBuffers(mainWindow);
-
-      // Draw window
-      glfwMakeContextCurrent(mainWindow2);
-      glClear(GL_COLOR_BUFFER_BIT);
-      glfwSwapBuffers(mainWindow2);
 
       glfwPollEvents();
     }

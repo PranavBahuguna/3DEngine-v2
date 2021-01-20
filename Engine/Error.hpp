@@ -23,16 +23,10 @@ static constexpr bool DEBUG_MODE = true;
 static constexpr bool DEBUG_MODE = false;
 #endif
 
-// Print and handle a raised error with additional supplied arguments
-static void raiseError(ERROR errCode, ERROR_TYPE errType, ...) {
-  // Do not print debug messages if we are not running in debug mode
-  if (!DEBUG_MODE && errType == ERROR_TYPE::DEBUG)
-    return;
+namespace detail {
 
-  std::string header;
-  std::string body;
-
-  // Set the message header based on the error type raised
+// Sets an message header based on the error type raised
+static void setMessageHeader(std::string &header, ERROR errCode, ERROR_TYPE errType) {
   switch (errType) {
   case ERROR_TYPE::DEBUG:
     header = "[DEBUG] ";
@@ -50,8 +44,10 @@ static void raiseError(ERROR errCode, ERROR_TYPE errType, ...) {
   }
 
   header += std::to_string(errCode) + ": ";
+}
 
-  // Set the message body based on the error code and any additional arguments
+// Set the message body based on the error code
+static void setMessageBody(std::string &body, ERROR errCode) {
   switch (errCode) {
   case ERROR_GLFW_INIT_FAILED:
     body = "GLFW initialization failed!";
@@ -66,6 +62,19 @@ static void raiseError(ERROR errCode, ERROR_TYPE errType, ...) {
     body = "Unknown error.";
     break;
   }
+}
+} // namespace detail
+
+// Print and handle a raised error with additional supplied arguments
+static void raiseError(ERROR errCode, ERROR_TYPE errType, ...) {
+  // Do not print debug messages if we are not running in debug mode
+  if (!DEBUG_MODE && errType == ERROR_TYPE::DEBUG)
+    return;
+
+  std::string header, body;
+
+  detail::setMessageHeader(header, errCode, errType);
+  detail::setMessageBody(body, errCode);
 
   std::string errMsg = header + body + "\n";
 
