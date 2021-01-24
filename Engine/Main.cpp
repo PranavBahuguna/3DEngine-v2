@@ -29,7 +29,7 @@ int main() {
     }
 
   } catch (std::exception &e) {
-    printf(e.what());
+    printf("A fatal error occurred!\n%s\n", e.what());
     return EXIT_FAILURE;
   }
 

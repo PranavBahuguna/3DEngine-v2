@@ -25,7 +25,8 @@ Window::Window(const std::string &name, WindowMode wMode, int width, int height)
   // Try creating the window
   _glfwWindow = glfwCreateWindow(_width, _height, name.c_str(), monitor, NULL);
   if (_glfwWindow == nullptr)
-    raiseError(ERROR_GLFW_WINDOW_CREATE_FAILED, ERROR_TYPE::CRITICAL, name.c_str());
+    throw std::runtime_error(
+        buildErrMsg(ERROR::GLFW_WINDOW_CREATE_FAILED, ERROR_TYPE::CRITICAL, name.c_str()));
 
   // Setup keyboard and mouse handlers
   // ...
