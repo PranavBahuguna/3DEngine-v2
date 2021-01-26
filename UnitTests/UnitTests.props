@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <ThirdPartyLibs>$(SolutionDir)/ThirdParty/libs</ThirdPartyLibs>
+    <ThirdPartyHeaders>$(SolutionDir)/ThirdParty/headers</ThirdPartyHeaders>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ThirdPartyLibs)/boost_1_75_0</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ThirdPartyLibs)/boost_1_75_0/stage/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies></AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="ThirdPartyLibs">
+      <Value>$(ThirdPartyLibs)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="ThirdPartyHeaders">
+      <Value>$(ThirdPartyHeaders)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
