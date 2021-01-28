@@ -9,8 +9,6 @@ static constexpr bool USE_FULLSCREEN = true;
 
 int main() {
   try {
-    printf("Starting program...");
-
     // Create a single window
     WindowMode wMode = USE_FULLSCREEN ? WindowMode::FULLSCREEN : WindowMode::WINDOWED;
     WindowManager::Get().create(wMode);

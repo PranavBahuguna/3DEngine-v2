@@ -17,11 +17,7 @@ public:
   ~Window();
 
   GLFWwindow *getGLFWWindow();
-
   std::string getName() const;
-  int getWidth() const;
-  int getHeight() const;
-  float getAspectRatio() const;
 
   friend class WindowManager;
 
@@ -30,6 +26,4 @@ private:
 
   GLFWwindow *_glfwWindow;
   std::string _name;
-  int _width;
-  int _height;
 };

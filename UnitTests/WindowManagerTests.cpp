@@ -1,5 +1,4 @@
 #include "WindowManager.hpp"
-#include <Windows.h>
 
 #define BOOST_TEST_MODULE WindowManagerTests
 #include <boost/test/unit_test.hpp>
