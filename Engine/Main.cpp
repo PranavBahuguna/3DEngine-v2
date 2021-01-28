@@ -7,8 +7,6 @@ static constexpr bool USE_FULLSCREEN = false;
 static constexpr bool USE_FULLSCREEN = true;
 #endif
 
-using namespace Engine::Windows;
-
 int main() {
   try {
     // Create a single window
@@ -29,7 +27,7 @@ int main() {
     }
 
   } catch (std::exception &e) {
-    printf(e.what());
+    printf("A fatal error occurred!\n%s\n", e.what());
     return EXIT_FAILURE;
   }
 

@@ -3,9 +3,6 @@
 
 #include <stdexcept>
 
-using namespace Engine::Windows;
-using namespace Error;
-
 WindowManager::~WindowManager() {
   closeAll();
   glfwTerminate();
@@ -40,7 +37,7 @@ size_t WindowManager::numWindows() const { return _windows.size(); }
 // Setup GFLW basic properties
 void WindowManager::InitGLFW() {
   if (!glfwInit())
-    raiseError(ERROR_GLFW_INIT_FAILED, ERROR_TYPE::CRITICAL);
+    throw std::runtime_error(buildErrMsg(ERROR::GLFW_INIT_FAILED, ERROR_TYPE::CRITICAL));
 
   // OpenGL version
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -56,7 +53,7 @@ void WindowManager::InitGLFW() {
 // Setup GLEW basic properties
 void WindowManager::InitGLEW() {
   if (!glewInit())
-    raiseError(ERROR_GLEW_INIT_FAILED, ERROR_TYPE::CRITICAL);
+    throw std::runtime_error(buildErrMsg(ERROR::GLEW_INIT_FAILED, ERROR_TYPE::CRITICAL));
 
   // Allow modern extension features
   glewExperimental = GL_TRUE;

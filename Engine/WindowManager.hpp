@@ -7,8 +7,6 @@
 #include <memory>
 #include <vector>
 
-namespace Engine::Windows {
-
 static constexpr const char *DEFAULT_WINDOW_NAME = "Window_";
 
 /**
@@ -59,4 +57,3 @@ private:
 
   std::vector<std::shared_ptr<Window>> _windows;
 };
-} // namespace Engine::Windows
