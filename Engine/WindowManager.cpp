@@ -3,9 +3,6 @@
 
 #include <stdexcept>
 
-using namespace Engine::Windows;
-using namespace Error;
-
 WindowManager::~WindowManager() {
   closeAll();
   glfwTerminate();

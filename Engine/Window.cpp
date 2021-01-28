@@ -3,11 +3,8 @@
 
 #include <stdexcept>
 
-using namespace Engine::Windows;
-using namespace Error;
-
 Window::Window(const std::string &name, WindowMode wMode, int width, int height)
-    : _width(width), _height(height) {
+    : _name(name), _width(width), _height(height) {
 
   // Set window dimensions from screen if fullscreen is enabled
   GLFWmonitor *monitor = nullptr;
@@ -35,6 +32,8 @@ Window::Window(const std::string &name, WindowMode wMode, int width, int height)
 Window::~Window() { glfwDestroyWindow(_glfwWindow); }
 
 GLFWwindow *Window::getGLFWWindow() { return _glfwWindow; }
+
+std::string Window::getName() const { return _name; }
 
 int Window::getWidth() const { return _width; }
 

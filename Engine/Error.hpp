@@ -4,8 +4,6 @@
 #include <stdexcept>
 #include <string>
 
-namespace Error {
-
 enum class ERROR { GLFW_INIT_FAILED, GLFW_WINDOW_CREATE_FAILED, GLEW_INIT_FAILED };
 
 enum class ERROR_TYPE { DEBUG, INFO, WARNING, CRITICAL };
@@ -89,4 +87,3 @@ static std::string buildErrMsg(ERROR errCode, ERROR_TYPE errType, ...) {
 
   return errMsgFormatted;
 }
-} // namespace Error

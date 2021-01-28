@@ -4,8 +4,6 @@
 
 #include <GLFW/glfw3.h>
 
-namespace Engine::Windows {
-
 enum class WindowMode { WINDOWED, FULLSCREEN_WINDOWED, FULLSCREEN };
 
 /**
@@ -20,6 +18,7 @@ public:
 
   GLFWwindow *getGLFWWindow();
 
+  std::string getName() const;
   int getWidth() const;
   int getHeight() const;
   float getAspectRatio() const;
@@ -30,7 +29,7 @@ private:
   Window(const std::string &name, WindowMode wMode, int width, int height);
 
   GLFWwindow *_glfwWindow;
+  std::string _name;
   int _width;
   int _height;
 };
-} // namespace Engine::Windows

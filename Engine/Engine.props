@@ -8,10 +8,10 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ThirdPartyHeaders);$(ThirdPartyLibs)/glew-2.1.0/include;$(ThirdPartyLibs)/glfw-3.3.2/include;$(ThirdPartyLibs)/glm;$(ThirdPartyLibs)/freetype-2.10.2-win64/include/freetype2;$(ThirdPartyLibs)/lua-5.4.0_Win64_dll16_lib/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ThirdPartyHeaders);$(ThirdPartyLibs)/glew-2.1.0/include;$(ThirdPartyLibs)/glfw-3.3.2/include;$(ThirdPartyLibs)/glm;$(ThirdPartyLibs)/freetype-2.10.2-win64/include/freetype2;$(ThirdPartyLibs)/lua-5.4.0_Win64_dll16_lib/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ThirdPartyLibs)/glew-2.1.0/lib/Release/x64;$(ThirdPartyLibs)/glfw-3.3.2/lib-vc2019;$(ThirdPartyLibs)/freetype-2.10.2-win64/lib;$(ThirdPartyLibs)/lua-5.4.0_Win64_dll16_lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ThirdPartyLibs)/glew-2.1.0/lib/Release/x64;$(ThirdPartyLibs)/glfw-3.3.2/lib-vc2019;$(ThirdPartyLibs)/freetype-2.10.2-win64/lib;$(ThirdPartyLibs)/lua-5.4.0_Win64_dll16_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;freetype.lib;lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

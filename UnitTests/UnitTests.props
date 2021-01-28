@@ -8,11 +8,11 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ThirdPartyLibs)/boost_1_75_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Engine;$(ThirdPartyLibs)/boost_1_75_0;$(ThirdPartyHeaders);$(ThirdPartyLibs)/glew-2.1.0/include;$(ThirdPartyLibs)/glfw-3.3.2/include;$(ThirdPartyLibs)/glm</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ThirdPartyLibs)/boost_1_75_0/stage/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies></AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/Engine/$(Platform)/$(Configuration);$(ThirdPartyLibs)/boost_1_75_0/stage/lib;$(ThirdPartyLibs)/glew-2.1.0/lib/Release/x64;$(ThirdPartyLibs)/glfw-3.3.2/lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
